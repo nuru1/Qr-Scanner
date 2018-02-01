@@ -23,9 +23,10 @@
 # Implement OnQRCodeReadListener in your Activity       
 
    Output will be available in overriden method onQRCodeRead()
-
-----   This code is available in ScanActivity.java
-   Scanner library reference:  https://android-arsenal.com/details/1/1891
+ 
+ This code is available in ScanActivity.java
+  
+ Scanner library reference:  https://android-arsenal.com/details/1/1891
  
 
 # Firebase Database 
