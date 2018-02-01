@@ -1,0 +1,127 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<title>QRCode generator for Javascript</title>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
+</head>
+<body align="center">
+
+<h1>  Details </h1>
+	<form >
+			Name:	<input type ="text" name="u" id="name"><br><br>
+			College:	<input type ="text" name="u" id="college"><br><br>
+			Roll no:	<input type ="text" name="u" id="roll"><br><br>
+			<button type="button" value="login" onclick="myFunction()">Submit</button>
+		</form>
+			
+	<br />
+<br />
+
+<input id="text" type="text" value="Please Enter Details" style="width:80%;height:10%" /><br />
+<div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+
+
+	
+
+<p id="para"></p>
+
+
+<script type="text/javascript">
+
+var name,college,roll,val,id,info;
+var Nam,Col,Rol;
+
+function myFunction() {
+	
+	Nam = document.getElementById("name").value;
+	Col = document.getElementById("college").value;
+	Rol = document.getElementById("roll").value;
+
+	if(Nam==""||Col==""||Rol==""){
+	alert("Enter all details");
+	}
+     name ="Name: "+Nam+";";
+	 college ="College: "+Col+";";
+	 roll="Roll no: "+Rol+";";
+	 info="Inaugeration:    Room no:"
+	 
+	id=randId();
+
+	var a = Nam.substring(0, 3).toUpperCase();;
+	var b = Col.substring(0, 3).toUpperCase();;
+	var c = "PVP-"+a+b;
+	
+	val = c+"!  "+name+" "+college+" "+roll+"  "+info;
+	document.getElementById("text").value=val;
+	document.getElementById("text").focus();
+
+	
+	var firebaseRef = firebase.database().ref().child("Participants").child(c).set({
+    name: Nam,
+    college: Col,
+	id : c,
+	scan : false,
+  }).on("child_added", function(data, prevChildKey) {
+   document.getElementById("para").innerHTML="Uploaded in Database: "+Nam;
+   
+   
+});
+}
+
+
+function randId() {
+     return "PVP-"+Math.random().toString(36).substr(2, 4);
+}
+
+
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+	width : 100,
+	height : 100
+});
+
+function makeCode () {		
+	var elText = document.getElementById("text");
+	
+	if (!elText.value) {
+		alert("Input a text");
+		elText.focus();
+		return;
+	}
+	
+	qrcode.makeCode(elText.value);
+}
+
+makeCode();
+
+$("#text").
+	on("blur", function () {
+		makeCode();
+	}).
+	on("keydown", function (e) {
+		if (e.keyCode == 13) {
+			makeCode();
+		}
+	});
+
+	
+</script>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyChOS4M7Aq9O7c60YbAZKjc2lXAyasg_8w",
+    authDomain: "qr-scanner-653dc.firebaseapp.com",
+    databaseURL: "https://qr-scanner-653dc.firebaseio.com",
+    projectId: "qr-scanner-653dc",
+    storageBucket: "qr-scanner-653dc.appspot.com",
+    messagingSenderId: "975372873603"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+</body>
+</html>
