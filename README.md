@@ -1,10 +1,6 @@
  -----------------------
-| Qr-Generator-Scanner  |                                                                        
+| Qr-Scanner  |                                                                        
  -----------------------               
- 
- 
-# Qr Code Generator(HTML & JS) 
-    Available in Qr Code Generator directory
  
 # Qr Code Scanner (Android Application)
  
